@@ -1,11 +1,17 @@
 // Rotation Matrix
-
-
 mat2 Rot(float a) {
     float s=sin(a), c=cos(a);
     return mat2(c, -s, s, c);
 }
 
+// Function from the Art of Code to efficienty add animation
+vec3 Transform(vec3 p)
+{
+   //p.xy *= Rot(iFrame*.01);
+   //p.xz *= Rot(iFrame*.01);
+  
+  return p;
+}
 // p5js.-shaders
 // Function to convert RGB to floating point between 0,1
 vec3 rgb( float 4, float g, float b) 
