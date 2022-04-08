@@ -1,4 +1,4 @@
-//Ported from Shadertoy based on Livestream tutorial by The Art of Code
+//Based on Space gif livestream tutorial by The Art of Code
   
 #ifdef GL_ES
 precision mediump float;
@@ -6,15 +6,17 @@ precision mediump float;
 
 uniform vec2 u_resolution; // This is passed in as a uniform from the sketch.js file
 uniform float iFrame;
+uniform float iTime;
 
 #define S smoothstep
 #define T iFrame*.01
+#define BLUE vec3(9,12,155)/255.
+#define GREEN vec3(190,238,98)/255.;
 
 // Both 0 or 1, returns 0, both different returns 1
 float Xor(float a, float b) {
   return a*(1.-b) + b*(1.-a);
 }
-
 
 float ran( vec2 pos )
 {
@@ -22,7 +24,6 @@ float ran( vec2 pos )
    float id = floor(pos.y + 20.);
    return fract(sin(id*564.32)*763.) ;  // randomize color
 }
-
 
 void main()
 {
@@ -32,8 +33,9 @@ void main()
     // Divide by iResolution.y to maintain aspect ratio
     vec2 uv = (gl_FragCoord.xy-.5*u_resolution.xy)/u_resolution.y;
 
-    // Time varying pixel color
-    vec3 col = vec3(0); // animation will be black and white
+    // Define base color
+     vec3 col = BLUE;
+
     // This is dividing the screen horizontally
     //vec3 col = vec3(.01*ran(uv), mix(.1, ran(uv), .8), mix(.7, .1*ran(uv), .2));
     
@@ -59,11 +61,9 @@ void main()
     vec2 id = floor( uv);
     
     // draw circle in each box
-   // float d = length(gv);
+    // float d = length(gv);
     float m = 0.;
     float t = T*1.;
-    
-    
     
     // Allow radius of circles to vary so that they can overlap
     // Each circle has to account for its neightbors so use double loop
@@ -92,14 +92,10 @@ void main()
          m = Xor(m, S(r, r*.9, d) );
       }
     }
-    //col.rb =gv;
-    col = vec3(gv, 1.);
-    // Use modulo with 2 so that only the odd number of circles show
     
-    col += m;
-    //col += mod(m, 2.);
+    float k = mod(m, 2.); // Use modulo with 2 so that only the odd number of circles show
+    vec3 col1 = GREEN;  // Define the second color
+    col = mix(col, col1, k);
 
-    // Output to screen
-    
     gl_FragColor = vec4(col,1.0);
 }

@@ -50,6 +50,9 @@ void main()
     // Remapped so that (0,0) is in center
     vec2 uv = (gl_FragCoord.xy -.5* u_resolution.xy)/u_resolution.y;
     vec2 mouse = iMouse.xy/u_resolution.xy;
+  
+    vec3 col1 = rgb(242.,43.,41.);
+  
     uv *= 2.;  // Can adjust size of Koch curve here
     
     // Time varying pixel color
@@ -88,6 +91,7 @@ void main()
         uv.x -= .5;
         uv -= n * min(0., dot(uv, n)) * 2.;
 
+
      }
     /* Add line segment by drawing the difference of the position of a 
     pixel and a position on the line segment.  Lying on x-axis.  */
@@ -96,9 +100,12 @@ void main()
     
     // Use smoothstep to cut out actual line
     // Divide by 9 to compensate for 
-    col += smoothstep(2./u_resolution.y, .0, d/scale);
+    col += smoothstep(2./u_resolution.y, .0, d/scale); // draws Koch curvle
+    col *= col1;  // add color to Koch curve
     uv /= scale;
     col += texture2D(tex0, uv*2.).rgb;
+    
+   
     // col += texture2D(tex0, uv*2. + iTime*0.003).rgb;
     //col.rg += uv;
      
