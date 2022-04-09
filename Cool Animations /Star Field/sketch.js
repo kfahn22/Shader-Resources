@@ -1,3 +1,7 @@
+// Ported to P5.js from the Art of Code YouTube star field tutorial
+// by Martijn Steinrucken aka The Art of Code/BigWings - 2020
+// YouTube: youtube.com/TheArtOfCodeIsCool
+
 let textureImg;
 
 // a shader variable

@@ -1,18 +1,20 @@
-// Created for https://github.com/Lumon-Industries/Macrodata-Refinement
 
-// Starting point for frag code is "Over the Moon"
+// Ported to P5.js from The Drive Home tutorial
 // by Martijn Steinrucken aka The Art of Code/BigWings 
-// YouTube: youtube.com/TheArtOfCodeIsCool
+// https://www.youtube.com/watch?v=eKtsY7hYTPg
 
-// More shader resources can be found here https://github.com/kfahn22/Shader-Resources
+let textureImg;
 
 // a shader variable
 let theShader;
 
 function preload(){
   // load the shader
+  // monochromatic image works best
+  textureImg = loadImage("Assets/ice.PNG");
   theShader = loadShader('starter.vert', 'starter.frag');
 }
+
 
 function setup() {
   pixelDensity(1);
@@ -20,6 +22,7 @@ function setup() {
   createCanvas(800, 800, WEBGL);
   noStroke();
 }
+
 
 function draw() {  
   background(0);
@@ -29,6 +32,7 @@ function draw() {
   theShader.setUniform("iMouse", [mouseX, map(mouseY, 0, height, height, 0)]);
   theShader.setUniform("iFrame", frameCount);
   theShader.setUniform("iTime", millis()/1000.);
+  theShader.setUniform("tex0", textureImg);
   
   // shader() sets the active shader with our shader
   shader(theShader);
