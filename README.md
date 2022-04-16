@@ -63,12 +63,24 @@ It would be fun to color each of the boxes a different color.  We can do that by
 
 ## 3.  Adding a circle
 The following line of code will give us the distance to the origin.
-
-`float d = length(uv- vec3(0.0));`
+`vec2 origin = vec2(0.0, 0,0);
+`float d = length(uv- origin);`
 
 We can use the smoothstep function to cut out a circle.
 
 `float d = smoothstep(.1, 0.09, d);`
+
+We can change the position of the circle by changing the the x or y coordinations of origin `vec2(0.0, 0.2)`.
+If we change origin to `vec2(0.0, p.y)`, we get a vertical bar.
+
+We can change it to a pill shape by clamping the y values.
+
+`float d = length(uv - vec2(0., clamp(-0.3, 0.3, uv.y) ) );`
+
+
+We can draw a line by adjusting the values in the smoothstep function.
+`float m = S(.01, .0, d);`
+
 
 ## 5.  Movement
 
