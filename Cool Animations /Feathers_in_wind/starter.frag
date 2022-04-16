@@ -1,6 +1,5 @@
-// Ported to P5.js from "RayMarching starting point" 
-// by Martijn Steinrucken aka The Art of Code/BigWings - 2020
-// The MIT License
+// Ported to P5.js from "Feathers in the Wind"  Youtube tutorial
+// by Martijn Steinrucken aka The Art of Code/BigWings 
 // YouTube: youtube.com/TheArtOfCodeIsCool
 
 #ifdef GL_ES
@@ -12,19 +11,28 @@ uniform vec2 u_resolution;
 uniform float iTime;
 uniform vec2 iMouse;
 uniform float iFrame;
-uniform sampler2D tex0;
-
-// The Art of Code Feathers in the Wind YouTube tutorial
 
 #define S smoothstep
  // can adjust the speed of the animation by changing 
 #define T (iTime*.5) 
+
+#define PINK vec3(246, 192, 208)/255.
+#define NAVY vec3(72,86,101)/255.
+#define YELLOW vec3(237, 221, 77)/255.
+#define BG backgroundGradient
 
 // Rotation Matrix
 mat2 Rot(float a)
 { 
 float s = sin(a), c = cos(a);
 return mat2(c, -s, s, c);
+}
+
+// Function to add background color
+vec3 backgroundGradient(vec2 uv, vec3 col1, vec3 col2, float m) {
+  float k = uv.y*m + m;
+  vec3 col = mix(col1, col2, k);
+  return col;
 }
 
 float Feather( vec2 pos)
@@ -120,13 +128,13 @@ void main()
    vec2 uv = (gl_FragCoord.xy -.5*u_resolution.xy)/u_resolution.y;
    
    
-   // add a mouse
+   // Add a mouse
    vec2 M = iMouse.xy/u_resolution.xy - .5; 
    
-   // Add background color with gradient
-   vec3 bg = vec3(.1, .2, .8)*(uv.y +.5);
-   bg += vec3(.7, .4, .1)*(-uv.y+.5);
-   vec4 col = vec4(bg, 0.);
+   // Add a background color
+   vec3 bg = BG(uv, YELLOW, NAVY, .8);
+  
+   vec4 col = vec4(bg, 1.);
     
    // Rotate the feathers
    // uv -= vec2(0.-.45);  //rotate around bottom of stem
@@ -144,6 +152,7 @@ void main()
    // use 1./50. so that i goes from [0,1]
    for (float i = 0.; i < 1.; i += 1./50.)
    {  
+   
        // move the feathers across screen
        // need to scale appropriately
        // can add M.x to x and M.y to y to adjust with mouse

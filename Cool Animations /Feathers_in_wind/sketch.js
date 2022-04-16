@@ -1,5 +1,5 @@
 // Ported to P5.js from Feathers in the Wind tutorial by The Art of Code
-
+// https://www.youtube.com/watch?v=hlM940IqpRU&list=RDCMUCcAlTqd9zID6aNX3TzwxJXg&index=17
 
 // a shader variable
 let theShader;
