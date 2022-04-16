@@ -66,11 +66,15 @@ If instead we wanted to add a color gradient, we can do this by adding the follo
 
 What if we wanted to add a grid pattern to the screen? We do this by multiplying the uvs by a scale factor.  Suppose
 we want a 2X2 grid.  We can do this by multiplying the uvs by 2.0, take the fractional compoment, and assign the value to a new vec2 we will call st.
+
 ` vec2 st = fract(uv*2.0);`
+
 We will use `col.rg += st;` to visualize the result. 
+
 <img class="img" src="images/multiply_uv.png" alt="Multiplying the uvs" style=" display: block;
     margin-left: auto;
     margin-right: auto;" width="100" height="100">
+
  We now have four boxes, each of which has uvs that go from 0.0, 1.0.  We remap the uvs so that 0.0, 0.0 is in the center of the screen by subtracting 0.5.
 
 `st = st - 0.5;`
@@ -82,15 +86,18 @@ We will use `col.rg += st;` to visualize the result.
 It would be fun to color each of the boxes a different color.  We can do that by using the floor function to get an index for each box, and then use a loop to assign either blue or yellow to each box.
 
 ## 3.  Adding a circle
-The following line of code will give us the distance to the origin.
-`vec2 origin = vec2(0.0, 0,0);
+The following lines of code will give us the distance from any uv coordinate to the origin.
+
+`vec2 origin = vec2(0.0, 0,0);`
 
 `float d = length(uv- origin);`
-<img class="img" src="images/.png" alt="Distance Function" style=" display: block;
+
+<img class="img" src="images/distance.png" alt="Distance Function" style=" display: block;
     margin-left: auto;
     margin-right: auto;" width="200" height="200">
 
 We can use the smoothstep function to cut out a circle.
+
 `float m = smoothstep(.1, 0.09, d);`
 
 <img class="img" src="images/white_circle.png" alt="Circle" style=" display: block;
@@ -99,19 +106,20 @@ We can use the smoothstep function to cut out a circle.
 
 We can  multiply m by a color to change the color of the circle.
 `col += m*PURPLE;`
+
 <img class="img" src="images/pink_circle.png" alt="Circle" style=" display: block;
     margin-left: auto;
-    margin-right: auto;" width="100" height="100">
+    margin-right: auto;" width="200" height="200">
 
 We can change the position of the circle by changing the the x or y coordinations of origin `vec2(0.0, 0.2)`.
 
 <img class="img" src="images/circle_move.png" alt="Circle Moved Up" style=" display: block;
     margin-left: auto;
-    margin-right: auto;" width="100" height="100">
+    margin-right: auto;" width="200" height="200">
 
 If we change origin to `vec2(0.0, p.y)`, we get a infinite vertical bar.
 
-<img class="img" src="images/inifinite_column.png" alt="Vertical bar" style=" display: block;
+<img class="img" src="images/infinite_column.png" alt="Vertical bar" style=" display: block;
     margin-left: auto;
     margin-right: auto;" width="200" height="200">
 
