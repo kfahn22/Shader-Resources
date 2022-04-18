@@ -41,7 +41,6 @@ float r = mix(.1, .01, S(-.3, .3, pos.y) );  // values go from -.5,.5
    // teardrop shaped mask
    float m = S(.01, .0, d - r);  // first parameter blurriness factor
    
-   
     float side = sign(pos.x);
    
    // substract by .5 to get origin in middle
@@ -99,7 +98,7 @@ vec4 FeatherBall( vec3 ro, vec3 rd, vec3 pos, float angle)
       vec3 pF = ro + rd *(t-x) - pos;  // front intersection
       pF = Transform(pF, angle);
       
-      // add polar coordinates to. wrap feather around sphere
+      // Add polar coordinates to. wrap feather around sphere
       //cyclindical projection
       // [-pi, pi] in x direction &  [-1,1 in y direction
       vec2 uvF = vec2(atan(pF.x, pF.z), pF.y);  
